@@ -5,7 +5,7 @@
 node index.js -a list
 ```
 
-https://skr.sh/sGwYKAtBZOH
+![image](https://skr.sh/sGwYKAtBZOH)
 
 ## Получаем контакт по id
 ```bash
