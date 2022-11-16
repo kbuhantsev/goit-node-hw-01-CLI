@@ -12,18 +12,18 @@ node index.js -a list
 node index.js -a get -i 5
 ```
 
-https://skr.sh/sGwpgkyGkjW
+![image](https://skr.sh/sGwpgkyGkjW.jpg)
 
 ## Добавялем контакт
 ```bash
 node index.js -a add -n Mango -e mango@gmail.com -p 322-22-22
 ```
 
-https://skr.sh/sGwFkPexoZH
+![image](https://skr.sh/sGwFkPexoZH.jpg)
 
 ## Удаляем контакт
 ```bash
 node index.js -a remove -i 3
 ```
 
-https://skr.sh/sGw50ahrC2W
+![image](https://skr.sh/sGw50ahrC2W.jpg)
