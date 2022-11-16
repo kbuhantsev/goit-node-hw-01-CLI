@@ -1,35 +1,50 @@
 import fs from "fs/promises";
 import { normalize } from "path";
 
-// fs.readFile(filename, [options]) - чтение файла
-// fs.writeFile(filename, data, [options]) - запись файла
-// fs.appendFile(filename, data, [options])- добавление в файл
-// fs.rename(oldPath, newPath) - переименование файла.
-// fs.unlink(path, callback)
-
 const contactsPath = normalize("db/contacts.json");
 
-// TODO: задокументировать каждую функцию
 async function listContacts() {
-  // ...твой
   try {
     const text = await fs.readFile(contactsPath, "utf-8");
     return JSON.parse(text);
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    return [];
   }
 }
 
-function getContactById(contactId) {
-  // ...твой код
+async function getContactById(contactId) {
+  const contacts = await listContacts();
+  return contacts.find((element) => element.id === contactId);
 }
 
-function removeContact(contactId) {
-  // ...твой код
+async function removeContact(contactId) {
+  const contacts = await listContacts();
+  const filteredContacts = contacts.filter(
+    (element) => element.id !== contactId
+  );
+  try {
+    await fs.writeFile(contactsPath, JSON.stringify(filteredContacts), "utf-8");
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-function addContact(name, email, phone) {
-  // ...твой код
+async function addContact(name, email, phone) {
+  const contacts = await listContacts();
+  const maxID = contacts.reduce((acc, element) => {
+    return Math.max(acc, +element.id);
+  }, 0);
+  contacts.push({ id: String(maxID + 1), name, email, phone });
+  try {
+    await fs.writeFile(
+      contactsPath,
+      JSON.stringify(contacts, null, 2),
+      "utf-8"
+    );
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export { listContacts, getContactById, removeContact, addContact };
