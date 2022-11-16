@@ -24,9 +24,15 @@ async function removeContact(contactId) {
     (element) => element.id !== contactId
   );
   try {
-    await fs.writeFile(contactsPath, JSON.stringify(filteredContacts), "utf-8");
+    await fs.writeFile(
+      contactsPath,
+      JSON.stringify(filteredContacts, null, 2),
+      "utf-8"
+    );
+    return true;
   } catch (error) {
     console.error(error);
+    return false;
   }
 }
 
@@ -35,15 +41,18 @@ async function addContact(name, email, phone) {
   const maxID = contacts.reduce((acc, element) => {
     return Math.max(acc, +element.id);
   }, 0);
-  contacts.push({ id: String(maxID + 1), name, email, phone });
+  const ID = String(maxID + 1);
+  contacts.push({ id: ID, name, email, phone });
   try {
     await fs.writeFile(
       contactsPath,
       JSON.stringify(contacts, null, 2),
       "utf-8"
     );
+    return ID;
   } catch (error) {
     console.error(error);
+    return null;
   }
 }
 
